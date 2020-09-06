@@ -31,6 +31,7 @@
     border-radius: 10px;
     background-color: #ffffff;
     margin-bottom: 30px;
+
     
 }
 .time{
@@ -40,7 +41,7 @@
 .name{
     position: absolute;
     top:-15px;
-    font-weight: 800;
+    font-weight: 700;
     font-size: xx-small;
 }
 .chat-receiver{
@@ -53,4 +54,24 @@
     align-items: center;
     height: 65px;
     border-top:1px solid lightgray;
+}
+.chat-footer > form{
+    flex: 1;
+    display: flex;
+   
+}
+.chat-footer > form > input{
+    flex: 1;
+    border-radius: 30px;
+    padding: 10px;
+    border:none;
+    outline: none;
+
+}
+.chat-footer > form >button{
+   display:none;
+}
+.chat-footer>.MuiSvgIcon-root{
+    margin: 10px;
+    color: gray;
 }
