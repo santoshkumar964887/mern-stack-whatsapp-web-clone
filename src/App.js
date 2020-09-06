@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from "axios";
+import MainWindo from './components/mainchat/mainchat';
+import Sidebar from './components/sidebar/sidebar';
 import './App.css';
 class App extends Component {
 
@@ -17,9 +18,14 @@ class App extends Component {
  render() {
     
     return (
-      <>
-       santosh
-    </>
+      <div className="App">
+        <div className="app-body">
+        <Sidebar/>
+        <MainWindo/>
+   
+        </div>
+     
+     </div>
     );
   }
 }
