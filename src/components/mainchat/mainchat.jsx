@@ -5,7 +5,9 @@ export class mainchat extends Component {
     render() {
         return (
             <div className="mainchat">
-                santosh
+              <div className="chat-header">
+                  
+              </div>
             </div>
         )
     }
