@@ -1,7 +1,7 @@
 import express from "express";
-import whatsappModel from './model';
 const app=express();
 app.use(express.json())
+import model from './model';
 const port=process.env.port||5000;
 import mongoose from 'mongoose';
 const mongodburl="mongodb+srv://Santosh964884:Santosh737982@@cluster0.wtsz3.mongodb.net/whatsapp-clone?retryWrites=true&w=majority"
