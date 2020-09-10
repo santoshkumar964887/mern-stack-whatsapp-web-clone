@@ -1,7 +1,15 @@
 import express from "express";
 import messageModel  from './model.js';
+import Pusher from 'pusher';
 const app=express();
 app.use(express.json())
+const pusher = new Pusher({
+  appId: '1070904',
+  key: '1bfabf99055cfb47bcd5',
+  secret: '911f259e7a6a034f2f4f',
+  cluster: 'ap2',
+  encrypted: true
+});
 
 const port=process.env.port||5000;
 import mongoose from 'mongoose';
@@ -15,6 +23,20 @@ mongoose.connect(mongodburl,{
 }).then((con)=>{
   console.log("connected into database");
 })
+
+const db=mongoose.connection;
+db.once("open",()=>{
+  const messagecollection=db.collection("message");
+  const changestrem= messagecollection.watch();
+  changestrem.on("change",(change)=>{
+    if(change.operationType==="insert"){
+      const messageDetails=change.fullDocument;
+      console.log(messageDetails)
+      // pusher.trigger("message",'inserted')
+    }
+  })
+})
+
 app.get('/api/v1/message',(req,res)=>{
     messageModel.find((err,data)=>{
       if(err){
