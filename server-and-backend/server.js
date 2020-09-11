@@ -41,8 +41,11 @@ db.once("open",()=>{
     if(change.operationType==='insert'){
       const messageChange=change.fullDocument;
       pusher.trigger('messages','inserted',{
-      message: messageChange.name,
-      name:messageChange.message
+      message: messageChange.message,
+      name:messageChange.name,
+      timestam:messageChange.timestam,
+    received:messageChange.received
+
       });
     }
     else{
@@ -51,7 +54,7 @@ db.once("open",()=>{
   });
 })
 
-app.get('/api/v1/message',(req,res)=>{
+app.get('/message',(req,res)=>{
     messageModel.find((err,data)=>{
       if(err){
         res.status(500).json({
@@ -71,7 +74,7 @@ app.get('/api/v1/message',(req,res)=>{
 
     })
 });
-app.post('/api/v1/message',(req,res)=>{
+app.post('/message',(req,res)=>{
    messageModel.create(req.body,(err,data)=>{
      if(err){
        res.status(500).json({
