@@ -33,12 +33,11 @@ const App= ()=> {
 
   },[allmessages])
  
-  console.log(allmessages)
     return (
       <div className="App">
         <div className="app-body">
         <Sidebar/>
-        <MainWindo/>
+        <MainWindo messages={allmessages}/>
    
         </div>
      
