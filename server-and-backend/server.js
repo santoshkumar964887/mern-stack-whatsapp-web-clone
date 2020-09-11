@@ -1,6 +1,7 @@
 import express from "express";
 import messageModel  from './model.js';
 import Pusher from 'pusher';
+import cors from 'cors';
 const app=express();
 app.use(express.json())
 const pusher = new Pusher({
@@ -10,6 +11,14 @@ const pusher = new Pusher({
   cluster: 'ap2',
   encrypted: true
 });
+app.use(cors());
+// app.use((req,res,next)=>{
+//      res.setHeader("Acccess-Control-Allow-Origin","*");
+//      res.setHeader("Acccess-Control-Allow-Headers","*");
+
+//   next()
+
+// })
 
 const port=process.env.port||5000;
 import mongoose from 'mongoose';
@@ -26,15 +35,20 @@ mongoose.connect(mongodburl,{
 
 const db=mongoose.connection;
 db.once("open",()=>{
-  const messagecollection=db.collection("message");
+  const messagecollection=db.collection("messages");
   const changestrem= messagecollection.watch();
   changestrem.on("change",(change)=>{
-    if(change.operationType==="insert"){
-      const messageDetails=change.fullDocument;
-      console.log(messageDetails)
-      // pusher.trigger("message",'inserted')
+    if(change.operationType==='insert'){
+      const messageChange=change.fullDocument;
+      pusher.trigger('messages','inserted',{
+      message: messageChange.name,
+      name:messageChange.message
+      });
     }
-  })
+    else{
+      console.log('Error triggering pusher')
+    }
+  });
 })
 
 app.get('/api/v1/message',(req,res)=>{

@@ -7,4 +7,4 @@ const schema= mongoose.Schema({
 
 });
 
-export default mongoose.model("message",schema);
+export default mongoose.model("messages",schema);
