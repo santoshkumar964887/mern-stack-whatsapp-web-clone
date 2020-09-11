@@ -1,21 +1,23 @@
-import React, { Component } from 'react';
+import React,{useEffect} from 'react';
 import MainWindo from './components/mainchat/mainchat';
 import Sidebar from './components/sidebar/sidebar';
 import './App.css';
-class App extends Component {
+import Pusher from 'pusher-js';
+const App= ()=> {
 
-  constructor(){
-    super();
-    this.state = {
-    search:"",
-    error: "",
-    posts: [],
-    };
+  
+  useEffect(()=>{
+    const pusher = new Pusher('1bfabf99055cfb47bcd5', {
+      cluster: 'ap2'
+    });
 
-  }
+    const channel = pusher.subscribe('messages');
+    channel.bind('inserted',(data)=>{
+      alert(JSON.stringify(data));
+    });
 
+  },[])
 
- render() {
     
     return (
       <div className="App">
@@ -27,7 +29,7 @@ class App extends Component {
      
      </div>
     );
-  }
+  
 }
 
 export default App;
